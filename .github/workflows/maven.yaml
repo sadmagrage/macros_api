@@ -14,8 +14,8 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_DB: macros_v2_test-db
-          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
         ports:
           - 5432:5432
         options: >-
@@ -27,8 +27,8 @@ jobs:
     env:
       SPRING_PROFILES_ACTIVE: ${{ secrets.DB_PROFILE }}
       DB_URL: jdbc:postgresql://localhost:5432/macros_v2_test-db
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USERNAME: postgres
+      DB_PASSWORD: root
       DB_DDL_AUTO: create-drop
 
     steps:
