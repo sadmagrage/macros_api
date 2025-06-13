@@ -25,7 +25,7 @@ jobs:
           --health-retries=5
 
     env:
-      SPRING_PROFILES_ACTIVE: ${{ secrets.DB_PROFILE }}
+      SPRING_PROFILES_ACTIVE: prod
       DB_URL: jdbc:postgresql://localhost:5432/macros_v2_test-db
       DB_USERNAME: postgres
       DB_PASSWORD: root
