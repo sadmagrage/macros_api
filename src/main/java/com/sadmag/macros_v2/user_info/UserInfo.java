@@ -50,4 +50,10 @@ public class UserInfo {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     @JsonIgnoreProperties("user_info")
     private User user;
+
+    public boolean checkIfBirthHasOccuredThisYear() {
+        var now = LocalDateTime.now();
+
+        return now.isBefore(this.birth.withYear(now.getYear()));
+    }
 }
