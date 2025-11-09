@@ -20,6 +20,11 @@ public class HarrisBenedictEquationImpl implements Equation {
 
         var now = dateUtils.getCurrentTime();
 
+        if (userInfo.getWeight() == 0.0f) throw new MissingValuesInEquation("Missing weight value");
+        if (userInfo.getHeight() == 0.0f) throw new MissingValuesInEquation("Missing height value");
+        if (userInfo.getBirth().isEqual(LocalDateTime.MIN)) throw new MissingValuesInEquation("Missing birth value");
+        if (Character.toUpperCase(userInfo.getGender()) != 'M' && Character.toUpperCase(userInfo.getGender()) != 'F') throw new MissingValuesInEquation("Unrecognized or missing gender");
+
         var yearToGetDate = dateUtils.hasDateOccurredThisYear(now, userInfo.getBirth()) ? now.getYear()
                 : now.getYear() - 1;
 
@@ -29,11 +34,9 @@ public class HarrisBenedictEquationImpl implements Equation {
         var weight = userInfo.getWeight();
 
         if (Character.toUpperCase(gender) == 'M') {
-            totalKcalSpent = 66.47f + (13.75f * weight) + (5.003f * height) - (6.775f * age);
+            totalKcalSpent = 66.4730f + (13.7516f * weight) + (5.0033f * height) - (6.755f * age);
         } else if (Character.toUpperCase(gender) == 'F') {
-            totalKcalSpent = 655.09f + (9.563f * weight) + (1.85f * height) - (4.676f * age);
-        } else {
-            throw new MissingValuesInEquation("Unrecognized or missing gender");
+            totalKcalSpent = 655.0955f + (9.5634f * weight) + (1.8496f * height) - (4.6756f * age);
         }
 
         return totalKcalSpent;
