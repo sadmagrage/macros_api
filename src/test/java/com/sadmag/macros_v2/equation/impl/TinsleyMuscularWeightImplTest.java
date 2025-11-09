@@ -32,16 +32,16 @@ class TinsleyMuscularWeightImplTest {
     @ParameterizedTest
     @DisplayName("calculate() should calculate the basal spent from Tinsley muscular weight equation")
     @MethodSource("provideUserInfo")
-    void calculate(UserInfo userInfo, float expectedValue) {
+    void calculate_shouldCalculateTheBasalSpentFromTinsleyMuscularWeightEquation(UserInfo userInfo, float expectedValue) {
         var result = tinsleyMuscularWeight.calculate(userInfo);
 
         Assertions.assertTrue(Math.abs(expectedValue - result) < 1);
     }
 
     @ParameterizedTest
-    @DisplayName("calculate() should throw MissingValuesException when missing required values")
+    @DisplayName("calculate() should throw MissingValuesException when required values are missing")
     @MethodSource("provideUserInfoWithMissingValues")
-    void calculate_shouldThrowMissingValuesInEquation(UserInfo userInfo) {
+    void calculate_shouldThrowMissingValuesException_whenRequiredValuesAreMissing(UserInfo userInfo) {
         Assertions.assertThrows(MissingValuesInEquation.class, () -> tinsleyMuscularWeight.calculate(userInfo));
     }
 
