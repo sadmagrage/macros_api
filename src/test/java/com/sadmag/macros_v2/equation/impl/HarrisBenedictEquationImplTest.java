@@ -41,7 +41,7 @@ class HarrisBenedictEquationImplTest {
     @ParameterizedTest
     @DisplayName("calculate() should calculate the basal spent from Harris Benedict equation when birth has occurred")
     @MethodSource("provideUserInfoBirthOccurred")
-    void shouldCalculateUsingHarrisBenedictFormula(UserInfo userInfo, float expectedValue) {
+    void calculate_shouldCalculateUsingHarrisBenedictFormulaWhenBirthHasOccurred(UserInfo userInfo, float expectedValue) {
         Mockito.when(dateUtils.getCurrentTime()).thenReturn(LocalDateTime.parse("2025-11-07T16:59:00"));
         Mockito.when(dateUtils.hasDateOccurredThisYear(Mockito.any(), Mockito.any())).thenReturn(true);
 
@@ -51,9 +51,9 @@ class HarrisBenedictEquationImplTest {
     }
 
     @ParameterizedTest
-    @DisplayName("calculate() should calculate the basal spent from Harris Benedict equation when birth has not occurred yet")
+    @DisplayName("calculate() should calculate using Harris Benedict equation when birth has not occurred yet")
     @MethodSource("provideUserInfoBirthHasNotOccurredYet")
-    void shouldCalculateUsingHarrisBenedictFormulaWhenBirthNotOccurredYet(UserInfo userInfo, float expectedValue) {
+    void calculate_shouldCalculateUsingHarrisBenedictFormulaWhenBirthNotOccurredYet(UserInfo userInfo, float expectedValue) {
         Mockito.when(dateUtils.getCurrentTime()).thenReturn(LocalDateTime.parse("2025-01-10T16:59:00"));
         Mockito.when(dateUtils.hasDateOccurredThisYear(Mockito.any(), Mockito.any())).thenReturn(false);
 
@@ -63,9 +63,9 @@ class HarrisBenedictEquationImplTest {
     }
 
     @ParameterizedTest
-    @DisplayName("calculate() should calculate the basal spent from Harris Benedict equation when birth has not occurred yet")
+    @DisplayName("calculate() should throw MissingValuesException when required values are missing")
     @MethodSource("provideUserInfoBirthWithMissingValues")
-    void calculate_shouldThrowMissingValuesInEquation(UserInfo userInfo) {
+    void calculate_shouldThrowMissingValuesException_whenRequiredValuesAreMissing(UserInfo userInfo) {
         Assertions.assertThrows(MissingValuesInEquation.class, () -> harrisBenedictEquation.calculate(userInfo));
     }
 
