@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class HarrisBenedictEquationImpl implements Equation {
+public class HarrisBenedictImpl implements Equation {
 
     @Autowired
     private DateUtils dateUtils;
