@@ -1,6 +1,7 @@
 package com.sadmag.macros_v2.equation.impl;
 
 import com.sadmag.macros_v2.date.DateUtils;
+import com.sadmag.macros_v2.equation.exception.MissingValuesInEquation;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +59,13 @@ class MifflinImplTest {
         Assertions.assertTrue(Math.abs(expectedValue - result) < 1);
     }
 
+    @ParameterizedTest
+    @DisplayName("calculate() should throw MissingValuesException when required values are missing")
+    @MethodSource("provideUserInfoWithMissingValues")
+    void calculate_shouldThrowMissingValuesException_whenRequiredValuesAreMissing(UserInfo userInfo) {
+        Assertions.assertThrows(MissingValuesInEquation.class, () -> mifflinImpl.calculate(userInfo));
+    }
+
     static Stream<Arguments> provideUserInfoBirthOccurred() {
         return Stream.of(
                 Arguments.of(new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',
@@ -80,5 +88,18 @@ class MifflinImplTest {
                         0.0f, null, false, null), 1325.25f),
                 Arguments.of(new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("1975-12-31T00:00:00"), 160, 'F',
                         0.0f, null, false, null), 1294.00f));
+    }
+
+    static Stream<Arguments> provideUserInfoWithMissingValues() {
+        return Stream.of(
+                Arguments.of(new UserInfo(null, 0.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',
+                        0.0f, null, false, null)),
+                Arguments.of(new UserInfo(null, 70.0f, 10.0f, LocalDateTime.MIN, 175, 'M',
+                        0.0f, null, false, null)),
+                Arguments.of(new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 0, 'M',
+                        0.0f, null, false, null)),
+                Arguments.of(new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'T',
+                        0.0f, null, false, null))
+        );
     }
 }
