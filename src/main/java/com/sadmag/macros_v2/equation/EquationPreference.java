@@ -10,8 +10,13 @@ public enum EquationPreference {
     MIFFLIN("mifflin"),
     CUNNINGHAM("cunningham");
 
-    private String equationPreference;
+    private String value;
 
-    EquationPreference(String equationPreference) { }
+    EquationPreference(String equationPreference) {
+        this.value = equationPreference;
+    }
 
+    public String getValueImpl() {
+        return this.getValue() + "Impl";
+    }
 }
