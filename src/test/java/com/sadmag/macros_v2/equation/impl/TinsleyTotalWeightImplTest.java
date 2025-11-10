@@ -1,6 +1,6 @@
 package com.sadmag.macros_v2.equation.impl;
 
-import com.sadmag.macros_v2.equation.exception.MissingValuesInEquation;
+import com.sadmag.macros_v2.equation.exception.MissingValuesInEquationException;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +12,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TinsleyTotalWeightImplTest {
 
@@ -46,7 +43,7 @@ class TinsleyTotalWeightImplTest {
     void calculate_shouldThrowMissingValuesExceptionWhenMissingWeightValue() {
         var userInfo = new UserInfo(null, 0.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',0.0f, null, false, null);
 
-        Assertions.assertThrows(MissingValuesInEquation.class, () -> tinsleyTotalWeight.calculate(userInfo));
+        Assertions.assertThrows(MissingValuesInEquationException.class, () -> tinsleyTotalWeight.calculate(userInfo));
     }
 
     static Stream<Arguments> provideUserInfo() {

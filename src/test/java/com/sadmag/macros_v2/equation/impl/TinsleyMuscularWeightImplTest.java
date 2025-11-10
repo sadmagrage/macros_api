@@ -1,11 +1,10 @@
 package com.sadmag.macros_v2.equation.impl;
 
-import com.sadmag.macros_v2.equation.exception.MissingValuesInEquation;
+import com.sadmag.macros_v2.equation.exception.MissingValuesInEquationException;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TinsleyMuscularWeightImplTest {
 
@@ -42,7 +39,7 @@ class TinsleyMuscularWeightImplTest {
     @DisplayName("calculate() should throw MissingValuesException when required values are missing")
     @MethodSource("provideUserInfoWithMissingValues")
     void calculate_shouldThrowMissingValuesException_whenRequiredValuesAreMissing(UserInfo userInfo) {
-        Assertions.assertThrows(MissingValuesInEquation.class, () -> tinsleyMuscularWeight.calculate(userInfo));
+        Assertions.assertThrows(MissingValuesInEquationException.class, () -> tinsleyMuscularWeight.calculate(userInfo));
     }
 
     static Stream<Arguments> provideUserInfo() {

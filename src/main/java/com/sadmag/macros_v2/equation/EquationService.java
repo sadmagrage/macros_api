@@ -1,12 +1,10 @@
 package com.sadmag.macros_v2.equation;
 
-import com.sadmag.macros_v2.equation.exception.EquationNotFound;
+import com.sadmag.macros_v2.equation.exception.EquationNotFoundException;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,11 +16,11 @@ public class EquationService {
     public float calculate(UserInfo userInfo) {
         var totalSpent = 0.0f;
 
-        if (userInfo.getEquationPreference() == null) throw new EquationNotFound("No equation preference was found");
+        if (userInfo.getEquationPreference() == null) throw new EquationNotFoundException("No equation preference was found");
 
         var userEquationPreference = userInfo.getEquationPreference().getValueImpl();
 
-        if (!equations.containsKey(userEquationPreference)) throw new EquationNotFound("Equation not found.");
+        if (!equations.containsKey(userEquationPreference)) throw new EquationNotFoundException("Equation not found.");
 
         var equationPreference = equations.get(userEquationPreference);
 

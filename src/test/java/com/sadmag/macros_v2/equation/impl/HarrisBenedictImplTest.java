@@ -1,7 +1,7 @@
 package com.sadmag.macros_v2.equation.impl;
 
 import com.sadmag.macros_v2.date.DateUtils;
-import com.sadmag.macros_v2.equation.exception.MissingValuesInEquation;
+import com.sadmag.macros_v2.equation.exception.MissingValuesInEquationException;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +60,7 @@ class HarrisBenedictImplTest {
     @DisplayName("calculate() should throw MissingValuesException when required values are missing")
     @MethodSource("provideUserInfoBirthWithMissingValues")
     void calculate_shouldThrowMissingValuesException_whenRequiredValuesAreMissing(UserInfo userInfo) {
-        Assertions.assertThrows(MissingValuesInEquation.class, () -> harrisBenedictEquation.calculate(userInfo));
+        Assertions.assertThrows(MissingValuesInEquationException.class, () -> harrisBenedictEquation.calculate(userInfo));
     }
 
     static Stream<Arguments> provideUserInfoBirthOccurred() {
