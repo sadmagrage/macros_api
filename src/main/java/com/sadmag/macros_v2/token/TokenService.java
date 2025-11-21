@@ -18,7 +18,7 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    private final String issuer = "macros_app";
+    private final String issuer = "macros_api";
 
     public String generateToken(User user) {
         try {
