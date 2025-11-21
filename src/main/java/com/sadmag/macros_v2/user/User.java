@@ -2,6 +2,7 @@ package com.sadmag.macros_v2.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sadmag.macros_v2.user_info.UserInfo;
+import com.sadmag.macros_v2.user_preference.UserPreference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,10 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, optional = false)
     @JsonIgnoreProperties("user")
     private UserInfo userInfo;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, optional = false)
+    @JsonIgnoreProperties("user")
+    private UserPreference userPreference;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
