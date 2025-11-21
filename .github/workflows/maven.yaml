@@ -43,4 +43,5 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: root
           DB_DDL_AUTO: create-drop
+          TOKEN_SECRET: my-secret
         run: mvn -B clean package
