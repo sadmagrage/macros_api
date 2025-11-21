@@ -4,6 +4,7 @@ import com.sadmag.macros_v2.user.exception.UserNotFoundException;
 import com.sadmag.macros_v2.user.exception.UsernameOrEmailAlreadyExistsException;
 import com.sadmag.macros_v2.user.validators.Validator;
 import com.sadmag.macros_v2.user_info.UserInfo;
+import com.sadmag.macros_v2.user_preference.UserPreference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UserService {
 
         var user = new User();
         var userInfo = new UserInfo();
+        var userPreference = new UserPreference();
         var hashedPassword = new BCryptPasswordEncoder().encode(userDto.getPassword());
 
         user.setUsername(userDto.getUsername());
@@ -37,6 +39,7 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setUserRole(UserRole.USER);
         user.setUserInfo(userInfo);
+        user.setUserPreference(userPreference);
 
         userInfo.setWeight(userDto.getUserInfo().getWeight());
         userInfo.setBodyfat(userDto.getUserInfo().getBodyfat());
@@ -47,6 +50,11 @@ public class UserService {
         userInfo.setEquationPreference(userDto.getUserInfo().getEquationPreference());
         userInfo.setMacroInfoPublic(userDto.getUserInfo().isMacroInfoPublic());
         userInfo.setUser(user);
+
+        userPreference.setPhase(userDto.getUserPreferenceDto().getPhase());
+        userPreference.setSuperavitPercentage(userDto.getUserPreferenceDto().getSuperavitPercentage());
+        userPreference.setDeficitValue(userDto.getUserPreferenceDto().getDeficitValue());
+        userPreference.setUser(user);
 
         return userRepository.save(user);
     }
