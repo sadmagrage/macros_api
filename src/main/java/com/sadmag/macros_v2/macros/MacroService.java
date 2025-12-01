@@ -25,7 +25,7 @@ public class MacroService {
     public MacroDto calculate(String token) {
         float carb, prot, fat, caloricTarget;
 
-        var username = tokenService.validateToken(token);
+        var username = tokenService.validateToken(token.replace("Bearer ", ""));
 
         var userInfo = userInfoService.findUserInfoByUsername(username);
         var userPreference = userPreferenceService.findUserPreferenceByUsername(username);
@@ -33,12 +33,12 @@ public class MacroService {
         var tdee = equationService.calculate(userInfo);
 
         caloricTarget = switch (userPreference.getPhase()) {
-            case BULKING -> tdee * userPreference.getSuperavitPercentage();
+            case BULKING -> tdee * (1 + (userPreference.getSuperavitPercentage() / 100));
             case CUTTING -> tdee - userPreference.getDeficitValue();
             default -> tdee;
         };
 
-        prot = userInfo.getWeight() / 2;
+        prot = userInfo.getWeight() * 2;
         fat = userInfo.getWeight();
         carb = (caloricTarget - (fat * 9 + prot * 4))/4;
 
