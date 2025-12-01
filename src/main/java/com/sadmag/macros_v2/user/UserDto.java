@@ -14,5 +14,5 @@ public class UserDto {
     private String password;
     private String email;
     private UserInfoDto userInfo;
-    private UserPreferenceDto userPreferenceDto;
+    private UserPreferenceDto userPreference;
 }
