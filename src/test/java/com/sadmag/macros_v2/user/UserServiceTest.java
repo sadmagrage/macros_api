@@ -8,6 +8,8 @@ import com.sadmag.macros_v2.user.validators.impl.GenderValidator;
 import com.sadmag.macros_v2.user.validators.impl.PasswordValidator;
 import com.sadmag.macros_v2.user_info.UserInfo;
 import com.sadmag.macros_v2.user_info.UserInfoDto;
+import com.sadmag.macros_v2.user_preference.UserPreference;
+import com.sadmag.macros_v2.user_preference.UserPreferenceDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +59,8 @@ public class UserServiceTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreference);
 
         Mockito.when(userRepository.findUserByUsername(Mockito.any())).thenReturn(Optional.empty());
         Mockito.when(userRepository.findUserByEmail(Mockito.any())).thenReturn(Optional.empty());
@@ -87,11 +90,13 @@ public class UserServiceTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreferenceDto = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreferenceDto);
 
         User user = new User();
         var userInfo = new UserInfo(userInfoId, 82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true, user);
-        user = new User(userId, "teste", "teste123A!", "teste@domain.com", UserRole.USER, userInfo);
+        var userPreference = new UserPreference();
+        user = new User(userId, "teste", "teste123A!", "teste@domain.com", UserRole.USER, userInfo, userPreference);
 
         Mockito.when(userRepository.findUserByUsername("teste")).thenReturn(Optional.of(user));
 
@@ -106,11 +111,13 @@ public class UserServiceTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreferenceDto = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreferenceDto);
 
         User user = new User();
         var userInfo = new UserInfo(userInfoId, 82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true, user);
-        user = new User(userId, "teste", "teste123A!", "teste@domain.com", UserRole.USER, userInfo);
+        var userPreference = new UserPreference();
+        user = new User(userId, "teste", "teste123A!", "teste@domain.com", UserRole.USER, userInfo, userPreference);
 
         Mockito.when(userRepository.findUserByUsername("teste")).thenReturn(Optional.empty());
         Mockito.when(userRepository.findUserByEmail("teste@domain.com")).thenReturn(Optional.of(user));

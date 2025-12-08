@@ -4,6 +4,7 @@ import com.sadmag.macros_v2.equation.EquationPreference;
 import com.sadmag.macros_v2.user.UserDto;
 import com.sadmag.macros_v2.user.exception.ValidationException;
 import com.sadmag.macros_v2.user_info.UserInfoDto;
+import com.sadmag.macros_v2.user_preference.UserPreferenceDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +35,8 @@ class EmailValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
 
         emailValidator.validate(userDto);
     }
@@ -46,7 +48,8 @@ class EmailValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
 
         Assertions.assertThrows(ValidationException.class, () -> emailValidator.validate(userDto));
     }
@@ -58,7 +61,8 @@ class EmailValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
 
         Assertions.assertThrows(ValidationException.class, () -> emailValidator.validate(userDto));
     }

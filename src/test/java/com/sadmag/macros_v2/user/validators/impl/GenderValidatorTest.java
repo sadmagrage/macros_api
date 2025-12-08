@@ -4,6 +4,8 @@ import com.sadmag.macros_v2.equation.EquationPreference;
 import com.sadmag.macros_v2.user.UserDto;
 import com.sadmag.macros_v2.user.exception.ValidationException;
 import com.sadmag.macros_v2.user_info.UserInfoDto;
+import com.sadmag.macros_v2.user_preference.UserPreference;
+import com.sadmag.macros_v2.user_preference.UserPreferenceDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +34,8 @@ class GenderValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, gender, 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreference);
 
         genderValidator.validate(userDto);
     }
@@ -44,7 +47,8 @@ class GenderValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, gender, 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreference);
 
         genderValidator.validate(userDto);
     }
@@ -56,7 +60,8 @@ class GenderValidatorTest {
         var birth = LocalDateTime.now();
 
         var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, gender, 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto);
+        var userPreference = new UserPreferenceDto();
+        var userDto = new UserDto("teste", "teste123A!", "teste@domain.com", userInfoDto, userPreference);
 
         Assertions.assertThrows(ValidationException.class, () -> genderValidator.validate(userDto));
     }

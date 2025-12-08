@@ -48,7 +48,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTDecodeException e) {
-            return "Error decoding JWT token";
+            throw new RuntimeException("Error decoding JWT token");
         }
     }
 }
