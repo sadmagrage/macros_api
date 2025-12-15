@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user_preference_table")
+@Table(name = "tb_user_preference")
 public class UserPreference {
 
     @Id

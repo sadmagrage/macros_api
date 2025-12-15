@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "tb_user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
