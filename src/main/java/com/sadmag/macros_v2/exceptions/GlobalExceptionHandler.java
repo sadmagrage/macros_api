@@ -8,6 +8,9 @@ import com.sadmag.macros_v2.user.exception.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -73,6 +76,18 @@ public class GlobalExceptionHandler {
         var statusCode = (short) HttpStatus.BAD_REQUEST.value();
 
         var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, ex.getMessage(), req.getRequestURI());
+
+        return ResponseEntity.status(statusCode).body(exceptionResponse);
+    }
+
+    @ExceptionHandler({ InternalAuthenticationServiceException.class, BadCredentialsException.class })
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex, HttpServletRequest req) {
+        var error = "Invalid credentials";
+        var statusCode = (short) HttpStatus.UNAUTHORIZED.value();
+
+        var messageResponse = "Invalid credentials";
+
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, messageResponse, req.getRequestURI());
 
         return ResponseEntity.status(statusCode).body(exceptionResponse);
     }
