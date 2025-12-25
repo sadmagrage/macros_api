@@ -44,4 +44,5 @@ jobs:
           DB_PASSWORD: root
           DB_DDL_AUTO: create-drop
           TOKEN_SECRET: my-secret
+          ALLOW_CORS_ORIGIN: https://localhost:5173
         run: mvn -B clean package
