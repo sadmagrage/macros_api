@@ -1,5 +1,7 @@
 package com.sadmag.macros_v2.security;
 
+import com.sadmag.macros_v2.auth.AccessDeniedHandlerImpl;
+import com.sadmag.macros_v2.auth.AuthEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,12 @@ public class SecurityConfig {
     @Autowired
     private SecurityFilter securityFilter;
 
+    @Autowired
+    private AuthEntryPoint authEntryPoint;
+
+    @Autowired
+    private AccessDeniedHandlerImpl accessDeniedHandlerImpl;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -44,7 +52,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .anyRequest().hasRole("USER")
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling( e ->
+                        e.authenticationEntryPoint(authEntryPoint)
+                                .accessDeniedHandler(accessDeniedHandlerImpl)
+                );
 
         return http.build();
     }
