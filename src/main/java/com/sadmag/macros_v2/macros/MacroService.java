@@ -1,9 +1,10 @@
 package com.sadmag.macros_v2.macros;
 
 import com.sadmag.macros_v2.equation.EquationService;
+import com.sadmag.macros_v2.profile.exceptions.ProfileActiveNotFoundException;
+import com.sadmag.macros_v2.profile.ProfileResponse;
+import com.sadmag.macros_v2.profile.ProfileService;
 import com.sadmag.macros_v2.token.TokenService;
-import com.sadmag.macros_v2.user_info.UserInfoService;
-import com.sadmag.macros_v2.user_preference.UserPreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,7 @@ public class MacroService {
     private EquationService equationService;
 
     @Autowired
-    private UserInfoService userInfoService;
-
-    @Autowired
-    private UserPreferenceService userPreferenceService;
+    private ProfileService profileService;
 
     @Autowired
     private TokenService tokenService;
@@ -25,21 +23,20 @@ public class MacroService {
     public MacroDto calculate(String token) {
         float carb, prot, fat, caloricTarget;
 
-        var username = tokenService.validateToken(token.replace("Bearer ", ""));
+        var profiles = profileService.findAllByAuthenticatedUser(token);
 
-        var userInfo = userInfoService.findUserInfoByUsername(username);
-        var userPreference = userPreferenceService.findUserPreferenceByUsername(username);
+        var activeProfile = profiles.stream().filter(ProfileResponse::isProfileActive).findFirst().orElseThrow(ProfileActiveNotFoundException::new);
 
-        var tdee = equationService.calculate(userInfo);
+        var tdee = equationService.calculate(activeProfile);
 
-        caloricTarget = switch (userPreference.getPhase()) {
-            case BULKING -> tdee * (1 + (userPreference.getSuperavitPercentage() / 100));
-            case CUTTING -> tdee - userPreference.getDeficitValue();
+        caloricTarget = switch (activeProfile.getPhase()) {
+            case BULKING -> tdee * (1 + (activeProfile.getSuperavitPercentage() / 100));
+            case CUTTING -> tdee - activeProfile.getDeficitValue();
             default -> tdee;
         };
 
-        prot = userInfo.getWeight() * 2;
-        fat = userInfo.getWeight();
+        prot = activeProfile.getWeight() * 2;
+        fat = activeProfile.getWeight();
         carb = (caloricTarget - (fat * 9 + prot * 4))/4;
 
         return new MacroDto(carb, prot, fat, caloricTarget);
