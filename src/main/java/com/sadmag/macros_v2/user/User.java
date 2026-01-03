@@ -1,8 +1,7 @@
 package com.sadmag.macros_v2.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sadmag.macros_v2.user_info.UserInfo;
-import com.sadmag.macros_v2.user_preference.UserPreference;
+import com.sadmag.macros_v2.profile.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -38,14 +38,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private UserRole userRole;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, optional = false)
-    @JsonIgnoreProperties("user")
-    private UserInfo userInfo;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, optional = false)
-    @JsonIgnoreProperties("user")
-    private UserPreference userPreference;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
