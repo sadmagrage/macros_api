@@ -1,4 +1,4 @@
-package com.sadmag.macros_v2.user.validators.impl;
+package com.sadmag.macros_v2.user.validators;
 
 import com.sadmag.macros_v2.user.UserDto;
 import com.sadmag.macros_v2.user.exception.ValidationException;

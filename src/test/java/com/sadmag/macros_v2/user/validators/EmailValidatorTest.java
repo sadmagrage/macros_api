@@ -1,10 +1,7 @@
-package com.sadmag.macros_v2.user.validators.impl;
+package com.sadmag.macros_v2.user.validators;
 
-import com.sadmag.macros_v2.equation.EquationPreference;
 import com.sadmag.macros_v2.user.UserDto;
 import com.sadmag.macros_v2.user.exception.ValidationException;
-import com.sadmag.macros_v2.user_info.UserInfoDto;
-import com.sadmag.macros_v2.user_preference.UserPreferenceDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,9 +31,7 @@ class EmailValidatorTest {
         String email = "teste@domain.com";
         var birth = LocalDateTime.now();
 
-        var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userPreference = new UserPreferenceDto();
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
+        var userDto = new UserDto("teste", "teste123A!", email);
 
         emailValidator.validate(userDto);
     }
@@ -47,9 +42,7 @@ class EmailValidatorTest {
         String email = null;
         var birth = LocalDateTime.now();
 
-        var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userPreference = new UserPreferenceDto();
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
+        var userDto = new UserDto("teste", "teste123A!", email);
 
         Assertions.assertThrows(ValidationException.class, () -> emailValidator.validate(userDto));
     }
@@ -60,9 +53,7 @@ class EmailValidatorTest {
     void shouldThrowValidationExceptionWhenEmailIsInvalid(String email) {
         var birth = LocalDateTime.now();
 
-        var userInfoDto = new UserInfoDto(82.0f, 12f, birth, 172, 'M', 1.5f, EquationPreference.TINSLEY_MUSCULAR_WEIGHT, true);
-        var userPreference = new UserPreferenceDto();
-        var userDto = new UserDto("teste", "teste123A!", email, userInfoDto, userPreference);
+        var userDto = new UserDto("teste", "teste123A!", email);
 
         Assertions.assertThrows(ValidationException.class, () -> emailValidator.validate(userDto));
     }
