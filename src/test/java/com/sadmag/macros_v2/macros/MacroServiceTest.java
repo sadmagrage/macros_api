@@ -2,11 +2,9 @@ package com.sadmag.macros_v2.macros;
 
 import com.sadmag.macros_v2.equation.EquationService;
 import com.sadmag.macros_v2.phase.PhaseEnum;
+import com.sadmag.macros_v2.profile.ProfileResponse;
+import com.sadmag.macros_v2.profile.ProfileService;
 import com.sadmag.macros_v2.token.TokenService;
-import com.sadmag.macros_v2.user_info.UserInfo;
-import com.sadmag.macros_v2.user_info.UserInfoService;
-import com.sadmag.macros_v2.user_preference.UserPreference;
-import com.sadmag.macros_v2.user_preference.UserPreferenceService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +16,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Service
@@ -27,10 +27,7 @@ class MacroServiceTest {
     private EquationService equationService;
 
     @Mock
-    private UserInfoService userInfoService;
-
-    @Mock
-    private UserPreferenceService userPreferenceService;
+    private ProfileService profileService;
 
     @Mock
     private TokenService tokenService;
@@ -47,17 +44,15 @@ class MacroServiceTest {
     @Test
     @DisplayName("calculate() should return the MacrosDto when phase is set in Bulking")
     void calculate_shouldReturnTheMacrosDtoWhenPhaseIsSetInBulking() {
-        var userInfo = new UserInfo();
-        var userPreference = new UserPreference();
+        var profile = new ProfileResponse();
 
-        userInfo.setWeight(80.0f);
-
-        userPreference.setPhase(PhaseEnum.BULKING);
-        userPreference.setSuperavitPercentage(15.0f);
+        profile.setWeight(80.0f);
+        profile.setPhase(PhaseEnum.BULKING);
+        profile.setSuperavitPercentage(15.0f);
+        profile.setProfileActive(true);
 
         Mockito.when(tokenService.validateToken(Mockito.any())).thenReturn("teste");
-        Mockito.when(userInfoService.findUserInfoByUsername(Mockito.any())).thenReturn(userInfo);
-        Mockito.when(userPreferenceService.findUserPreferenceByUsername(Mockito.any())).thenReturn(userPreference);
+        Mockito.when(profileService.findAllByAuthenticatedUser(Mockito.any())).thenReturn(List.of(profile));
         Mockito.when(equationService.calculate(Mockito.any())).thenReturn(3170.06f);
 
         var result = macroService.calculate("token");
@@ -71,16 +66,14 @@ class MacroServiceTest {
     @Test
     @DisplayName("calculate() should return the MacrosDto when phase is set in Maintenance")
     void calculate_shouldReturnTheMacrosDtoWhenPhaseIsSetInMaintenance() {
-        var userInfo = new UserInfo();
-        var userPreference = new UserPreference();
+        var profile = new ProfileResponse();
 
-        userInfo.setWeight(80.0f);
-
-        userPreference.setPhase(PhaseEnum.MAINTENANCE);
+        profile.setWeight(80.0f);
+        profile.setPhase(PhaseEnum.MAINTENANCE);
+        profile.setProfileActive(true);
 
         Mockito.when(tokenService.validateToken(Mockito.any())).thenReturn("teste");
-        Mockito.when(userInfoService.findUserInfoByUsername(Mockito.any())).thenReturn(userInfo);
-        Mockito.when(userPreferenceService.findUserPreferenceByUsername(Mockito.any())).thenReturn(userPreference);
+        Mockito.when(profileService.findAllByAuthenticatedUser(Mockito.any())).thenReturn(List.of(profile));
         Mockito.when(equationService.calculate(Mockito.any())).thenReturn(3170.06f);
 
         var result = macroService.calculate("token");
@@ -94,17 +87,15 @@ class MacroServiceTest {
     @Test
     @DisplayName("calculate() should return the MacrosDto when phase is set in Cutting")
     void calculate_shouldReturnTheMacrosDtoWhenPhaseIsSetInCutting() {
-        var userInfo = new UserInfo();
-        var userPreference = new UserPreference();
+        var profile = new ProfileResponse();
 
-        userInfo.setWeight(80.0f);
-
-        userPreference.setPhase(PhaseEnum.CUTTING);
-        userPreference.setDeficitValue(500.0f);
+        profile.setWeight(80.0f);
+        profile.setPhase(PhaseEnum.CUTTING);
+        profile.setDeficitValue(500.0f);
+        profile.setProfileActive(true);
 
         Mockito.when(tokenService.validateToken(Mockito.any())).thenReturn("teste");
-        Mockito.when(userInfoService.findUserInfoByUsername(Mockito.any())).thenReturn(userInfo);
-        Mockito.when(userPreferenceService.findUserPreferenceByUsername(Mockito.any())).thenReturn(userPreference);
+        Mockito.when(profileService.findAllByAuthenticatedUser(Mockito.any())).thenReturn(List.of(profile));
         Mockito.when(equationService.calculate(Mockito.any())).thenReturn(3170.06f);
 
         var result = macroService.calculate("token");
