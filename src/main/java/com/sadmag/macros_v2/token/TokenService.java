@@ -39,6 +39,8 @@ public class TokenService {
     }
 
     public String validateToken(String token) {
+        token = token.replace("Bearer ", "");
+
         try {
             var algorithm = Algorithm.HMAC256(secret);
 
