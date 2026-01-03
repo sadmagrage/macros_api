@@ -2,6 +2,9 @@ package com.sadmag.macros_v2.exceptions;
 
 import com.sadmag.macros_v2.equation.exception.EquationNotFoundException;
 import com.sadmag.macros_v2.equation.exception.MissingValuesInEquationException;
+import com.sadmag.macros_v2.profile.exceptions.MaximumProfilesByUserException;
+import com.sadmag.macros_v2.profile.exceptions.ProfileActiveNotFoundException;
+import com.sadmag.macros_v2.profile.exceptions.ProfileNotFoundException;
 import com.sadmag.macros_v2.user.exception.UserNotFoundException;
 import com.sadmag.macros_v2.user.exception.UsernameOrEmailAlreadyExistsException;
 import com.sadmag.macros_v2.user.exception.ValidationException;
@@ -88,6 +91,36 @@ public class GlobalExceptionHandler {
         var messageResponse = "Invalid credentials";
 
         var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, messageResponse, req.getRequestURI());
+
+        return ResponseEntity.status(statusCode).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(ProfileActiveNotFoundException.class)
+    public ResponseEntity<Object> handleProfileActiveNotFoundException(ProfileActiveNotFoundException ex, HttpServletRequest req) {
+        var error = "No active profiles were found";
+        var statusCode = (short) HttpStatus.BAD_REQUEST.value();
+
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, ex.getMessage(), req.getRequestURI());
+
+        return ResponseEntity.status(statusCode).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(ProfileNotFoundException.class)
+    public ResponseEntity<Object> handleProfileNotFoundException(ProfileNotFoundException ex, HttpServletRequest req) {
+        var error = "Profile not found";
+        var statusCode = (short) HttpStatus.NOT_FOUND.value();
+
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, ex.getMessage(), req.getRequestURI());
+
+        return ResponseEntity.status(statusCode).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(MaximumProfilesByUserException.class)
+    public ResponseEntity<Object> handleMaximumProfilesByUserException(MaximumProfilesByUserException ex, HttpServletRequest req) {
+        var error = "Number of user profiles has reached the maximum";
+        var statusCode = (short) HttpStatus.CONFLICT.value();
+
+        var exceptionResponse = new ExceptionResponse(LocalDateTime.now(), statusCode, error, ex.getMessage(), req.getRequestURI());
 
         return ResponseEntity.status(statusCode).body(exceptionResponse);
     }
