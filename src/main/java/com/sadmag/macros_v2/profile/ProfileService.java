@@ -103,6 +103,7 @@ public class ProfileService {
         var profile = profileRepository.findByIdAndUsername(profileId, username).orElseThrow(ProfileNotFoundException::new);
 
         profile = new Profile(
+                profile.getId(),
                 profileRequest.getWeight(),
                 profileRequest.getBodyfat(),
                 profileRequest.getBirth(),
