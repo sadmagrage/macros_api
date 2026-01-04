@@ -1,7 +1,7 @@
 package com.sadmag.macros_v2.equation;
 
 import com.sadmag.macros_v2.equation.exception.EquationNotFoundException;
-import com.sadmag.macros_v2.user_info.UserInfo;
+import com.sadmag.macros_v2.profile.ProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +13,20 @@ public class EquationService {
     @Autowired
     private Map<String, Equation> equations;
 
-    public float calculate(UserInfo userInfo) {
+    public float calculate(ProfileResponse profile) {
         var totalSpent = 0.0f;
 
-        if (userInfo.getEquationPreference() == null) throw new EquationNotFoundException("No equation preference was found");
+        if (profile.getEquationPreference() == null) throw new EquationNotFoundException("No equation preference was found");
 
-        var userEquationPreference = userInfo.getEquationPreference().getValueImpl();
+        var userEquationPreference = profile.getEquationPreference().getValueImpl();
 
         if (!equations.containsKey(userEquationPreference)) throw new EquationNotFoundException("Equation not found.");
 
         var equationPreference = equations.get(userEquationPreference);
 
-        var basalSpent = equationPreference.calculate(userInfo);
+        var basalSpent = equationPreference.calculate(profile);
 
-        totalSpent = basalSpent * userInfo.getActivityFactor();
+        totalSpent = basalSpent * profile.getActivityFactor();
 
         return totalSpent;
     }

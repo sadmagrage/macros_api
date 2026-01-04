@@ -2,7 +2,8 @@ package com.sadmag.macros_v2.equation;
 
 import com.sadmag.macros_v2.equation.exception.EquationNotFoundException;
 import com.sadmag.macros_v2.equation.impl.*;
-import com.sadmag.macros_v2.user_info.UserInfo;
+import com.sadmag.macros_v2.phase.PhaseEnum;
+import com.sadmag.macros_v2.profile.ProfileResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,11 +41,11 @@ class EquationServiceTest {
     @Test
     @DisplayName("calculate() should do the basal value times activity factor")
     void calculate_shouldDoTheBasalValueTimesActivityFactor() {
-        var userInfo = new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, EquationPreference.HARRIS_BENEDICT, false, null);
+        var profile = new ProfileResponse(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, EquationPreference.HARRIS_BENEDICT, false, true, PhaseEnum.MAINTENANCE, 15f, 500f);
 
         Mockito.when(harrisBenedictImpl.calculate(Mockito.any())).thenReturn(2000.0f);
 
-        var result = equationService.calculate(userInfo);
+        var result = equationService.calculate(profile);
 
         Assertions.assertEquals(3000.0f, result);
     }
@@ -52,16 +53,16 @@ class EquationServiceTest {
     @Test
     @DisplayName("calculate() should throw EquationNotFound when equationPreference is null")
     void calculate_shouldThrowEquationNotFoundWhenEquationPreferenceIsNull() {
-        var userInfo = new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, null, false, null);
+        var profile = new ProfileResponse(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, null, false, true, PhaseEnum.MAINTENANCE, 15f, 500f);
 
-        Assertions.assertThrows(EquationNotFoundException.class, () -> equationService.calculate(userInfo));
+        Assertions.assertThrows(EquationNotFoundException.class, () -> equationService.calculate(profile));
     }
 
     @Test
     @DisplayName("calculate() should throw EquationNotFound when equationPreference is invalid")
     void calculate_shouldThrowEquationNotFoundWhenEquationPreferenceIsInvalid() {
-        var userInfo = new UserInfo(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, EquationPreference.TINSLEY_TOTAL_WEIGHT, false, null);
+        var profile = new ProfileResponse(null, 70.0f, 10.0f, LocalDateTime.parse("2000-01-11T00:00:00"), 175, 'M',1.5f, EquationPreference.TINSLEY_TOTAL_WEIGHT, false, true, PhaseEnum.MAINTENANCE, 15f, 500f);
 
-        Assertions.assertThrows(EquationNotFoundException.class, () -> equationService.calculate(userInfo));
+        Assertions.assertThrows(EquationNotFoundException.class, () -> equationService.calculate(profile));
     }
 }
