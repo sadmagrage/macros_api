@@ -23,7 +23,7 @@ public class ProfileRequest {
     private LocalDateTime birth;
     private int height;
     private char gender;
-    private float activityFloat;
+    private float activityFactor;
     private EquationPreference equationPreference;
     private boolean macroInfoPublic;
     private boolean profileActive;
