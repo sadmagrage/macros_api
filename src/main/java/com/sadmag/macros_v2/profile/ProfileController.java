@@ -33,14 +33,14 @@ public class ProfileController {
     }
 
     @PutMapping(path = "/{profile_id}")
-    public ResponseEntity<Object> update(@RequestHeader(name = "Authorization") String authToken, @RequestBody ProfileRequest profileRequest, @RequestParam(name = "profile_id") UUID profileId) {
+    public ResponseEntity<Object> update(@RequestHeader(name = "Authorization") String authToken, @RequestBody ProfileRequest profileRequest, @PathVariable(name = "profile_id") UUID profileId) {
         var profile = profileService.update(profileRequest, authToken, profileId);
 
         return ResponseEntity.ok(profile);
     }
 
     @DeleteMapping(path = "/{profile_id}")
-    public ResponseEntity<Object> delete(@RequestHeader(name = "Authorization") String authToken, @RequestParam(name = "profile_id") UUID profileId) {
+    public ResponseEntity<Object> delete(@RequestHeader(name = "Authorization") String authToken, @PathVariable(name = "profile_id") UUID profileId) {
         profileService.delete(authToken, profileId);
 
         return ResponseEntity.noContent().build();
