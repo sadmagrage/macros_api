@@ -49,13 +49,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/macros:latest \
-                       -t ${{ secrets.DOCKER_USERNAME }}/macros:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/macros-api:latest \
+                       -t ${{ secrets.DOCKER_USERNAME }}/macros-api:${{ github.sha }} .
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/macros:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/macros:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/macros-api:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/macros-api:${{ github.sha }}
