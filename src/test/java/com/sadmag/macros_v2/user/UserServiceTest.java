@@ -1,7 +1,7 @@
 package com.sadmag.macros_v2.user;
 
 import com.sadmag.macros_v2.user.exception.UsernameOrEmailAlreadyExistsException;
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import com.sadmag.macros_v2.user.validators.EmailValidator;
 import com.sadmag.macros_v2.profile.validators.GenderValidator;
 import com.sadmag.macros_v2.user.validators.PasswordValidator;

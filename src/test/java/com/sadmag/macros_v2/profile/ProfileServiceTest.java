@@ -7,7 +7,7 @@ import com.sadmag.macros_v2.profile.validators.GenderValidator;
 import com.sadmag.macros_v2.token.TokenService;
 import com.sadmag.macros_v2.user.UserService;
 import com.sadmag.macros_v2.user.exception.ValidationException;
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
