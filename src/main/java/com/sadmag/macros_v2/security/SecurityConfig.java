@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/food").permitAll()
                         .anyRequest().hasRole("USER")
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
