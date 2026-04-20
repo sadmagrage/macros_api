@@ -2,7 +2,7 @@ package com.sadmag.macros_v2.user;
 
 import com.sadmag.macros_v2.user.exception.UserNotFoundException;
 import com.sadmag.macros_v2.user.exception.UsernameOrEmailAlreadyExistsException;
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

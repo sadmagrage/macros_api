@@ -2,7 +2,7 @@ package com.sadmag.macros_v2.profile.validators;
 
 import com.sadmag.macros_v2.profile.ProfileRequest;
 import com.sadmag.macros_v2.user.exception.ValidationException;
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import org.springframework.stereotype.Service;
 
 @Service
