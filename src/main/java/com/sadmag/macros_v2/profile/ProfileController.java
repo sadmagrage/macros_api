@@ -1,6 +1,6 @@
 package com.sadmag.macros_v2.profile;
 
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

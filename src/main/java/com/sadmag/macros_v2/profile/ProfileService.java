@@ -5,7 +5,7 @@ import com.sadmag.macros_v2.profile.exceptions.ProfileNotFoundException;
 import com.sadmag.macros_v2.token.TokenService;
 import com.sadmag.macros_v2.user.UserService;
 import com.sadmag.macros_v2.user.exception.UserNotFoundException;
-import com.sadmag.macros_v2.user.validators.Validator;
+import com.sadmag.macros_v2.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
